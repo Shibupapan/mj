@@ -1,0 +1,38 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+abstract contract MyAbstractContract {
+  // Modifier to restrict function access to the admin (can be added here)
+  modifier onlyAdmin() {
+    require(msg.sender == admin, "Only admin can call this function");
+    _;
+  }
+
+  address public admin; // Address of the admin
+
+  // Constructor to set the admin address (can be moved to a separate contract)
+  constructor(address _admin) {
+    admin = _admin;
+  }
+
+  // Abstract function declaration (unchanged)
+  function abstractFunction() public virtual;
+}
+
+// Interface (unchanged)
+interface MyInterface {
+  function interfaceFunction() external;
+}
+
+// Contract implementing both (unchanged)
+contract MyContract is MyAbstractContract, MyInterface {
+  // Implementation of abstract function (unchanged)
+  function abstractFunction() public override onlyAdmin {
+    // Implementation code here
+  }
+
+  // Implementation of function from interface (unchanged)
+  function interfaceFunction() external override {
+    // Implementation code here
+  }
+}
