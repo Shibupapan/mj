@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+abstract contract BaseContract {
+
+  // State variable to store balance
+  uint public balance;
+
+  // View function to retrieve contract balance (accessible internally and externally)
+  function getBalance() public view returns (uint) {
+    return balance;
+  }
+
+  // Pure function to calculate the sum of two numbers (no state access, no gas cost)
+  function add(uint a, uint b) public pure returns (uint) {
+    return a + b;
+  }
+
+  // Payable function to receive funds (accepts Ether)
+  function deposit() public payable {
+    balance += msg.value;
+  }
+}
+
+// Derived contract inheriting from BaseContract
+contract DerivedContract is BaseContract {
+
+  // Function accessible only within DerivedContract and its derived contracts
+  function internalFunction(uint num) internal {
+    balance += num; // Modifying state is allowed within internal functions
+  }
+}
