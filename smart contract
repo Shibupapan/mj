@@ -1,0 +1,43 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract EventContract {
+
+  // User struct to store user information
+  struct User {
+    address userAddress;
+    uint depositedAmount;
+  }
+
+  // Mapping to store user deposits
+  mapping(address => User) public deposits;
+
+  // Event for successful deposit (indexed for searching)
+  event DepositMade(address indexed user, uint indexed amount);
+
+  // Event for failed deposit (optional, indexed for searching)
+  event DepositFailed(address indexed user, uint indexed amount, string reason);
+
+  // Event for withdrawal (indexed for searching)
+  event WithdrawalMade(address indexed user, uint indexed amount);
+
+  // Function to deposit funds
+  function deposit() public payable {
+    deposits[msg.sender].userAddress = msg.sender;
+    deposits[msg.sender].depositedAmount += msg.value;
+
+    emit DepositMade(msg.sender, msg.value);
+  }
+
+  // Function to simulate a failed deposit (uncomment for testing)
+  // function failedDeposit() public payable {
+  //   // Add logic for failing the deposit (e.g., insufficient minimum)
+  //   emit DepositFailed(msg.sender, msg.value, "Minimum deposit not met");
+  // }
+
+  // Function to withdraw funds (not implemented for simplicity)
+  // function withdraw(uint amount) public {
+  //   // Implement logic for withdrawing funds
+  //   emit WithdrawalMade(msg.sender, amount);
+  // }
+}
