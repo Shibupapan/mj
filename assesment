@@ -3,34 +3,36 @@ pragma solidity ^0.8.0;
 
 contract ExampleContract {
 
-  // Minimum age requirement with a descriptive name
+  // Minimum age requirement
   uint constant MINIMUM_AGE = 18;
 
-  // Function using require() with a more informative message
+  // Custom error types for better clarity
+  error InvalidAge(uint providedAge);
+  error InsufficientFunds(uint requestedAmount);
+  error InvalidRecipient();
+
+  // Function using require() with a custom error
   function checkAge_require(uint age) public {
-    require(age >= MINIMUM_AGE, "User must be at least 18 years old");
-    // Code to be executed if age is valid
-    NSLog("You meet the age requirement.");
+    require(age >= MINIMUM_AGE, InvalidAge(age));
+    NSLog("You meet the age requirement."); // Replace with actual logging
   }
 
-  // Function using assert() with a specific error code
+  // Function using assert() for internal checks
   function withdrawFunds(uint amount) public {
-    assert(amount > 0, "101: Withdraw amount must be positive"); // Custom error code
-    // Simulate fund withdrawal logic
-    NSLog("Withdrew", amount);
+    assert(amount > 0, InsufficientFunds(amount));
+    NSLog("Withdrew", amount); // Replace with actual logging
   }
 
-  // Function using revert() with conditional checking
+  // Function using revert() for critical errors
   function transferTo(address recipient) public {
     if (recipient == address(0)) {
-      revert("Invalid recipient address: 0x0000000000000000000000000000000000000000"); // More detailed error message
+      revert InvalidRecipient();
     }
-    // Simulate fund transfer logic
-    NSLog("Transferred funds to", recipient);
+    NSLog("Transferred funds to", recipient); // Replace with actual logging
   }
 
-  // Helper function for logging (assuming a logging mechanism exists)
-  function NSLog(string memory message, address optionalAddress) internal {
-    // Implement your logging logic here (e.g., using events or external services)
+  // Helper function for logging (replace with your implementation)
+  function NSLog(string memory message, address optionalAddress) internal pure {
+    // Replace this with your actual logging mechanism (e.g., console.log)
   }
 }
