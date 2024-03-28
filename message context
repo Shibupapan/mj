@@ -1,0 +1,13 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MyContract {
+
+  // Constant representing the "global value"
+  uint constant EXTERNAL_VALUE = 2; // Replace with the desired value
+
+  // Function that calculates something based on the constant
+  function calculate(uint _value) public pure returns (uint) {
+    return _value + (EXTERNAL_VALUE * _value);
+  }
+}
